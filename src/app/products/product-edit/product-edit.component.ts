@@ -4,19 +4,37 @@ import { MessageService } from '../../messages/message.service';
 
 import { Product } from '../product';
 import { ProductService } from '../product.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { OnInit } from '@angular/core';
 
 @Component({
   templateUrl: './product-edit.component.html',
   styleUrls: ['./product-edit.component.css']
 })
-export class ProductEditComponent {
+export class ProductEditComponent implements OnInit{
   pageTitle = 'Product Edit';
   errorMessage: string;
 
   product: Product;
 
   constructor(private productService: ProductService,
-              private messageService: MessageService) { }
+              private messageService: MessageService,
+              private route: ActivatedRoute,
+              private router: Router) { }
+
+  ngOnInit(){
+    //let id = +this.route.snapshot.paramMap.get('id');
+    //this.getProduct(id);
+    //Another way of fething parameters from routes by using below method call.
+    //this returns an observable object, which is ment for tracking the change in param value
+    //get the below code executed
+    this.route.paramMap.subscribe(
+      params => {
+        const id = +params.get('id');//'+' is used for casting because id sent from url is a string and we need an integer.
+        this.getProduct(id);
+      }
+    )
+  }
 
   getProduct(id: number): void {
     this.productService.getProduct(id).subscribe({
@@ -69,6 +87,8 @@ export class ProductEditComponent {
     } else {
       this.errorMessage = 'Please correct the validation errors.';
     }
+
+    
   }
 
   onSaveComplete(message?: string): void {
@@ -77,5 +97,6 @@ export class ProductEditComponent {
     }
 
     // Navigate back to the product list
+    this.router.navigate(['products']);
   }
 }
