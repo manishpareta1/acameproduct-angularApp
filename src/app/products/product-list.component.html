@@ -47,7 +47,14 @@
                    [style.margin.px]="imageMargin">
             </td>
             <td>
-              <a [routerLink] = "['/products', product.id]">
+              <!--Adding a query parameter to maintain the search criteria param when we 
+              navigate to product details page. The idea is when we press back button we 
+              should not lose our search criteria results. to make it work properly we
+              will need to add 'queryParamsHandling = "preserve"' property in the button or redirect
+              link from where we are trying to return, in current project it is the prodcut 
+              details page back button, check the back button in details page for this.-->
+              <a [routerLink] = "['/products', product.id]"              
+              [queryParams] = "{filterBy: listFilter, showImage: showImage}">
                 {{ product.productName }}
               </a>
             </td>
