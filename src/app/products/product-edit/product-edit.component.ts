@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { MessageService } from '../../messages/message.service';
 
-import { Product } from '../product';
+import { Product, ProductResolved } from '../product';
 import { ProductService } from '../product.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OnInit } from '@angular/core';
@@ -26,22 +26,36 @@ export class ProductEditComponent implements OnInit{
     //let id = +this.route.snapshot.paramMap.get('id');
     //this.getProduct(id);
     //Another way of fething parameters from routes by using below method call.
-    //this returns an observable object, which is ment for tracking the change in param value
-    //get the below code executed
-    this.route.paramMap.subscribe(
-      params => {
-        const id = +params.get('id');//'+' is used for casting because id sent from url is a string and we need an integer.
-        this.getProduct(id);
-      }
-    )
+    //this returns an observable object, which is ment for tracking the change 
+    //in param value and get the below code executed. We are using observable 
+    //because navigation between edit and add product is getting tracked with 
+    //the id passed in the URI, and hence Observable is the best to use to track
+    //such changes and load the data immediatly.
+    //commented below method as part of Route Resolver Changes.
+    // this.route.paramMap.subscribe(
+    //   params => {
+    //     const id = +params.get('id');//'+' is used for casting string to int because id sent from url is a string and we need an integer.
+    //     this.getProduct(id);
+    //   }
+    // )
+    /** Route Resolver Change new way. */
+    //we will use observable in place of snapshot way, because we have a navigation point on edit page
+    // to add product which has same url, And Observable is used for traking the change in param and load
+    //the data if there is any change.
+    this.route.data.subscribe(data => {
+        const resolvedData: ProductResolved = data['resolvedData'];
+        this.errorMessage = resolvedData.error;
+        this.onProductRetrieved(resolvedData.product);
+    })    
   }
 
-  getProduct(id: number): void {
-    this.productService.getProduct(id).subscribe({
-      next: product => this.onProductRetrieved(product),
-      error: err => this.errorMessage = err
-    });
-  }
+  /*Commented as part of Route Resolver Changes*/
+  // getProduct(id: number): void {
+  //   this.productService.getProduct(id).subscribe({
+  //     next: product => this.onProductRetrieved(product),
+  //     error: err => this.errorMessage = err
+  //   });
+  // }
 
   onProductRetrieved(product: Product): void {
     this.product = product;
