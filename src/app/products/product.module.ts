@@ -8,6 +8,8 @@ import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { ProductResolver } from './product-resolver.service';
 import { ProductListResolver } from './productlist-resolver.service';
+import { ProductEditInfoComponent } from './product-edit/product-edit-info.component';
+import { ProductEditTagsComponent } from './product-edit/product-edit-tags.component';
 
 @NgModule({
   imports: [
@@ -28,14 +30,21 @@ import { ProductListResolver } from './productlist-resolver.service';
           path: 'products/:id/edit', 
           component: ProductEditComponent,
           //added Routing resolver active route resolver and bind the returned data to resolvedData
-          resolve: { resolvedData: ProductResolver}
+          resolve: { resolvedData: ProductResolver },
+          children: [
+            { path: '' , redirectTo: 'info', pathMatch: 'full' },
+            { path: 'info', component: ProductEditInfoComponent },
+            { path: 'tags', component: ProductEditTagsComponent }
+          ]
         }
     ])
   ],
   declarations: [
     ProductListComponent,
     ProductDetailComponent,
-    ProductEditComponent
+    ProductEditComponent,
+    ProductEditInfoComponent,
+    ProductEditTagsComponent
   ]
 })
 export class ProductModule { }
