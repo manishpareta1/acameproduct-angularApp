@@ -17,3 +17,8 @@ export interface ProductResolved {
   product: Product;
   error?: any;
 }
+
+export interface ProductListResolved {
+  products: Product[];
+  error?: any;
+}

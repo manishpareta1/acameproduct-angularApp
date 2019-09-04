@@ -18,7 +18,7 @@ export class ProductResolver implements Resolve<ProductResolved>{
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ProductResolved>{
         const id = route.paramMap.get('id');
-        //adding error hadeling in case if the product is not found or its an incorrect
+        //adding error handling in case if the product is not found or its an incorrect
         //data formate        
         if(isNaN(+id)){
             const message = 'Proudct Id is not a number: '+ id;
@@ -33,9 +33,7 @@ export class ProductResolver implements Resolve<ProductResolved>{
                 console.error(message);
                 return of({ product: null, error: message});
             })
-            );
-
-    
+            );   
     }
 
 }

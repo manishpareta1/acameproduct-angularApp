@@ -34,14 +34,17 @@ export class ProductListComponent implements OnInit {
     //changes for QueryParam Implementation
     this.listFilter = this.route.snapshot.queryParamMap.get('filterBy') || '';
     this.showImage = this.route.snapshot.queryParamMap.get('showImage') === 'true';
+    const resolvedData: Product[] = this.route.snapshot.data['resolvedData'];
     
-    this.productService.getProducts().subscribe({
-      next: products => {
-        this.products = products;
-        this.filteredProducts = this.performFilter(this.listFilter);
-      },
-      error: err => this.errorMessage = err
-    });
+    this.products  = resolvedData;
+    this.filteredProducts = this.performFilter(this.listFilter);
+    // this.productService.getProducts().subscribe({
+    //   next: products => {
+    //     this.products = products;
+    //     this.filteredProducts = this.performFilter(this.listFilter);
+    //   },
+    //   error: err => this.errorMessage = err
+    // });
   }
 
   performFilter(filterBy: string): Product[] {

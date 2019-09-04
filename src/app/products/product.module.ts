@@ -7,12 +7,17 @@ import { ProductEditComponent } from './product-edit/product-edit.component';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { ProductResolver } from './product-resolver.service';
+import { ProductListResolver } from './productlist-resolver.service';
 
 @NgModule({
   imports: [
     SharedModule,
     RouterModule.forChild([
-      { path: 'products', component: ProductListComponent},
+      { 
+          path: 'products', 
+          component: ProductListComponent,
+          resolve: {resolvedData: ProductListResolver}
+      },      
       { 
           path: 'products/:id', 
           component: ProductDetailComponent,
