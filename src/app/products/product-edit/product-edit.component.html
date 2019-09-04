@@ -73,7 +73,7 @@
                   style="width:80px"
                   type="button"
                   [title]="productForm.valid ? 'Save your entered data' : 'Disabled until the form data is valid'"
-                  [disabled]="!productForm.valid"
+                  [disabled]="!productForm.valid"                  
                   (click)="saveProduct()">
             Save
           </button>
@@ -81,7 +81,8 @@
                   style="width:80px"
                   type="button"
                   title="Cancel your edits"
-                  [routerLink] = "['/products']">
+                  [routerLink] = "['/products']"
+                  queryParamsHandling = "preserve">
             Cancel
           </button>
           <button class="btn btn-outline-warning"

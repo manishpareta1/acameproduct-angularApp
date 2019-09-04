@@ -67,7 +67,8 @@
             </td>
             <td>
               <button class="btn btn-outline-primary btn-sm"
-              [routerLink] = "['/products', product.id, 'edit']">
+              [routerLink] = "['/products', product.id, 'edit']"
+              [queryParams] = "{filterBy: listFilter, showImage: showImage}">
                 Edit
               </button>
             </td>
