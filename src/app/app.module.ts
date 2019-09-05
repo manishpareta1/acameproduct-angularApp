@@ -2,6 +2,7 @@
 
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
 // Imports for loading & configuring the in-memory web api
@@ -27,7 +28,8 @@ import { AppRoutingModule } from './app-routing.module';
     ProductModule,
     UserModule,
     MessageModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule
     
   ],
   declarations: [

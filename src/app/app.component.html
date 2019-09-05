@@ -43,6 +43,8 @@
     </li>
   </ul>
 </nav>
-<div class="container">
-  <router-outlet></router-outlet>
+<div class="container"
+      [@slideAnimation] = "o.isActivated  ? o.activateRoute : ''">
+  <!--Associating the animation with the correct html-->
+  <router-outlet #o="outlet"></router-outlet>
 </div>
