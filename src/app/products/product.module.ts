@@ -17,26 +17,38 @@ import { ProductEditTagsComponent } from './product-edit/product-edit-tags.compo
     RouterModule.forChild([
       { 
           path: 'products', 
-          component: ProductListComponent,
-          resolve: {resolvedData: ProductListResolver}
-      },      
-      { 
-          path: 'products/:id', 
-          component: ProductDetailComponent,
-          //added Routing resolver active route resolver and bind the returned data to resolvedData
-          resolve: { resolvedData: ProductResolver}
-      },
-      { 
-          path: 'products/:id/edit', 
-          component: ProductEditComponent,
-          //added Routing resolver active route resolver and bind the returned data to resolvedData
-          resolve: { resolvedData: ProductResolver },
+         // component: ProductListComponent, // commented to make Proudct list page as component less route
+          resolve: {resolvedData: ProductListResolver},
+          //Grouping the Component - making Proucts as component less route
           children: [
-            { path: '' , redirectTo: 'info', pathMatch: 'full' },
-            { path: 'info', component: ProductEditInfoComponent },
-            { path: 'tags', component: ProductEditTagsComponent }
+            //below route is needed to redirect products link to ProductListComponent
+            //when we will click on ProudtList, it will try to look for a component to load, as there is no
+            //component mapped in ProductList link, it will try to load child route defination
+            //hence it will redirect it to below empty path route and load the associated component.
+            { 
+              path: '',
+              component: ProductListComponent
+            },
+            { 
+              path: ':id', 
+              component: ProductDetailComponent,
+              //added Routing resolver active route resolver and bind the returned data to resolvedData
+              resolve: { resolvedData: ProductResolver}
+          },
+          { 
+              path: ':id/edit', 
+              component: ProductEditComponent,
+              //added Routing resolver active route resolver and bind the returned data to resolvedData
+              resolve: { resolvedData: ProductResolver },
+              children: [
+                { path: '' , redirectTo: 'info', pathMatch: 'full' },
+                { path: 'info', component: ProductEditInfoComponent },
+                { path: 'tags', component: ProductEditTagsComponent }
+              ]
+            }
           ]
-        }
+      }      
+      
     ])
   ],
   declarations: [
