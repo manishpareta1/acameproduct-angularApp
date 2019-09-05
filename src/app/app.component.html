@@ -3,15 +3,24 @@
   <ul class="navbar-nav">
     <li class="nav-item">
       <a class="nav-link"
-      [routerLink] = "['/welcome']">Home</a>
+      [routerLink] = "['/welcome']"
+      routerLinkActive="active">Home</a>
     </li>
+    <!--to highlight the menu option when we nagigate to it, we are using routerLinkActive directive
+    we added it in all, root menu, Home/Proudcts List/ Add Proudct.
+    Because Product List and Add Proudct has same route /product
+    both will become active and shown as highleted if we click on any of them. to avoid this we are using
+    extra directive routerLinkActiveOptions in ProductList which will make it active only when it exactly active-->
     <li class="nav-item">
       <a class="nav-link"
-      [routerLink] = "['/products']">Product List</a>
-    </li>
+      [routerLink] = "['/products']"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }">Product List</a>
+    </li> 
     <li class="nav-item">
       <a class="nav-link"
-      [routerLink] = "['/products', 0, 'edit']">Add Product</a>
+      [routerLink] = "['/products', 0, 'edit']"
+      routerLinkActive="active">Add Product</a>
     </li>
   </ul>
   <ul class="navbar-nav ml-auto">

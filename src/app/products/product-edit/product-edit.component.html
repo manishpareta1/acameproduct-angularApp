@@ -6,11 +6,19 @@
   <div class="card-body"
        *ngIf="product">
       <div class="wizard">
-       <a [routerLink] = "['info']">
-         Basic Information
+        <!--Added Highliting of Module when navigating between components.
+            Added ngClass directive to add functionality in cases where we are trying to update the
+            detials of Product and we didnt provide all the mandatory field values and navigate to
+            next module, thus to keep record of the missing filed on previos component we are adding
+            Exclamation mark with the menu description to identify that there was some thing missing
+            on the page-->
+       <a [routerLink] = "['info']"
+          routerLinkActive = "active">
+         Basic Information<span [ngClass]="{'fa fa-exclamation': !isValid('info')}"></span>
        </a>
-       <a [routerLink] = "['tags']">
-        Search Tags
+       <a [routerLink] = "['tags']" 
+         routerLinkActive ="active">
+        Search Tags<span [ngClass]="{'fa fa-exclamation': !isValid('tags')}"></span>
       </a>
     </div>
     <router-outlet></router-outlet>
