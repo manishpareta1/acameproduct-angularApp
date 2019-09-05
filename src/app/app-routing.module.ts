@@ -10,9 +10,10 @@ import { PageNotFoundComponent } from './page-not-found.component';
         RouterModule.forRoot([
             { path: 'welcome', component: WelcomeComponent},
             { path: '', redirectTo:'welcome', pathMatch: 'full'},
-            { path: '**', component: PageNotFoundComponent}
-      
-          ])
+            { path: '**', component: PageNotFoundComponent}      
+          ],//We can enable the route tracing with below code
+            //{ enableTracing: true }
+          )
     ],
     //this is to make the routs available in other module which are using it.
     //and also to make sure that routs defined in RouteModule defined in imports are accessible
