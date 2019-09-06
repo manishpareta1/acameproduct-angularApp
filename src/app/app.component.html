@@ -30,9 +30,17 @@
         *ngIf="isLoggedIn">
       <a class="nav-link">Welcome {{ userName }}</a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link">Show Messages</a>
+    <li class="nav-item" *ngIf="!messageService.isDisplayed">
+          <!-- added router link for secondary outlet
+          <a class="nav-link"
+          [routerLink]="[{outlets: {popup: ['message']}}]">Show Messages</a>-->
+          <a class="nav-link"
+          (click)="displayMessage()">Show Messages</a>
     </li>
+    <!-- Hide Message Option-->
+    <li class="nav-item" *ngIf="messageService.isDisplayed">
+        <a class="nav-link" (click)="hideMessage()">Hide Messages</a>
+      </li>
     <li class="nav-item"
         *ngIf="!isLoggedIn">
       <a class="nav-link"
@@ -45,8 +53,16 @@
     </li>
   </ul>
 </nav>
-<div class="container"
-      [@slideAnimation] = "o.isActivated  ? o.activateRoute : ''">
-  <!--Associating the animation with the correct html-->
-  <router-outlet #o="outlet"></router-outlet>
-</div>
+
+<!--#Changes for secondary Route, also called as Defining Named Route-->
+<div class="container">
+  <div class = "row">
+    <!--#1Associating the animation with the correct html-->
+    <div class = "col-md-10" [@slideAnimation] = "o.isActivated  ? o.activateRoute : ''">
+        <router-outlet #o="outlet"></router-outlet>
+    </div>
+    <div class = "col-md-2">
+        <router-outlet name ="popup"></router-outlet>
+    </div>
+  </div>
+</div>  

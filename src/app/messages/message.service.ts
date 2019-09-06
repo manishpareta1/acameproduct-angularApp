@@ -5,9 +5,11 @@ import { Injectable } from '@angular/core';
 })
 export class MessageService {
   private _messages: string[] = [];
+  //to enable and disable the show message option.
+  isDisplayed = false;
 
   get messages(): string[] {
-    return this._messages;
+    return this._messages
   }
 
   addMessage(message: string): void {

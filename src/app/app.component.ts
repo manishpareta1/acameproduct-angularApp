@@ -4,6 +4,7 @@ import { AuthService } from './user/auth.service';
 import { Router, Event, NavigationStart, NavigationEnd, NavigationError, NavigationCancel } from '@angular/router';
 import { animation } from '@angular/animations';
 import { slideInAnimation } from './app.animation';
+import { MessageService } from './messages/message.service';
 
 @Component({
   selector: 'pm-root',
@@ -32,7 +33,10 @@ export class AppComponent {
 
   //As we want to watch event as soon as it start,
   //so we are subscribe to the event when the component is loaded and use it to display spinner
-  constructor(private authService: AuthService,private route: Router) { 
+  constructor(private authService: AuthService,
+              private route: Router,
+              //added MessageService to get the isDisplay flag value to show or hide the message popup secondar route
+              private messageService: MessageService) { 
     route.events.subscribe((routerEvent: Event) =>{
       this.checkRouterEvent(routerEvent);
     })
@@ -59,5 +63,18 @@ export class AppComponent {
           routerEvent instanceof NavigationError){
             this.loading = false;
           }
+  }
+
+  //added method to display secondary route, message popup
+  displayMessage(): void{
+    this.route.navigate([{outlets: {popup: ['message']}}]);
+    this.messageService.isDisplayed = true;
+  }
+
+  //added method to hide secondary route, message popup
+  hideMessage(): void{
+    //code to clear the secondary outlet
+    this.route.navigate([{outlets: {popup: null}}]);
+    this.messageService.isDisplayed = false;
   }
 }
