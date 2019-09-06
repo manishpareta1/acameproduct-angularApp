@@ -10,6 +10,7 @@ import { ProductResolver } from './product-resolver.service';
 import { ProductListResolver } from './productlist-resolver.service';
 import { ProductEditInfoComponent } from './product-edit/product-edit-info.component';
 import { ProductEditTagsComponent } from './product-edit/product-edit-tags.component';
+import { AuthGuard } from '../user/auth.guard';
 
 @NgModule({
   imports: [
@@ -27,6 +28,9 @@ import { ProductEditTagsComponent } from './product-edit/product-edit-tags.compo
             //hence it will redirect it to below empty path route and load the associated component.
             { 
               path: '',
+              //added guard to validate the if user is logged in before accessing the products page
+              //we have added it at parent level hence it is applicable for all of its children
+              canActivate: [AuthGuard],
               component: ProductListComponent
             },
             { 
