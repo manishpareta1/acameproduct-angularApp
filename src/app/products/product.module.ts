@@ -11,6 +11,7 @@ import { ProductListResolver } from './productlist-resolver.service';
 import { ProductEditInfoComponent } from './product-edit/product-edit-info.component';
 import { ProductEditTagsComponent } from './product-edit/product-edit-tags.component';
 import { AuthGuard } from '../user/auth.guard';
+import { ProductEditGuard } from './product-edit/product-edit.guard';
 
 @NgModule({
   imports: [
@@ -41,6 +42,9 @@ import { AuthGuard } from '../user/auth.guard';
           },
           { 
               path: ':id/edit', 
+              //associated candeactivate guard with product edit page, and it will be applicable for
+              //both of its child route, info and tags.
+              canDeactivate: [ProductEditGuard],
               component: ProductEditComponent,
               //added Routing resolver active route resolver and bind the returned data to resolvedData
               resolve: { resolvedData: ProductResolver },

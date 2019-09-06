@@ -6,6 +6,7 @@ import { Product, ProductResolved } from '../product';
 import { ProductService } from '../product.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OnInit } from '@angular/core';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   templateUrl: './product-edit.component.html',
@@ -15,8 +16,35 @@ export class ProductEditComponent implements OnInit{
   pageTitle = 'Product Edit';
   errorMessage: string;
 
-  product: Product;
+ 
   private dataIsValid: { [key: string]: boolean} ={};
+
+  private currentProduct: Product;
+  private originalProduct: Product;
+
+  //changed the regular product variable with the getter and setter so that we can track the change in object
+  //this will be helpful when we are using canDeactivate guard to find if the ther is unsaved data when user is
+  //trying to navigate to other page from product edit or add product page. we will be able to generate warning/message
+  //to user to notify about the unsaved work.
+  //we have set current product to product in get method so in all the child component we are passing the
+  //the reference of current procect.
+  get product(): Product{
+    return this.currentProduct
+  }
+
+  //in this setter method we are cloning product object and setting it to original prduct so that we can use
+  //it for future comparision when we have unsaved object when user is trying to move away from edit product page
+  set product(value: Product){
+    this.currentProduct = value;
+    //clone the object to retain a copy
+    this.originalProduct={...value};
+  }
+
+  //method to compare the object on edit page with the previos and new object.
+  //it will compare the elements and if they have desired value undre those elements or not.
+  get isDirty(): boolean{
+    return JSON.stringify(this.originalProduct) !== JSON.stringify(this.currentProduct);
+  }
 
   constructor(private productService: ProductService,
               private messageService: MessageService,
@@ -120,7 +148,9 @@ export class ProductEditComponent implements OnInit{
     if (message) {
       this.messageService.addMessage(message);
     }
-
+    //calling reset method. this will help to avoid the error message when moving from edit page to
+    //product list page.
+    this.reset();
     // Navigate back to the product list
     this.router.navigate(['products']);
   }
@@ -147,5 +177,11 @@ export class ProductEditComponent implements OnInit{
         this.dataIsValid['tags'] = false;
         }
       }
+
+    reset(): void{
+      this.dataIsValid = null;
+      this.currentProduct = null;
+      this.originalProduct = null;
+    }
   
 }
