@@ -15,14 +15,16 @@ export class AuthGuard implements  CanActivate{
   canActivate(next: ActivatedRouteSnapshot, //activateroutesnapshot tells us what will be the next route to be activated
     //RouterStateSnapshot provide access to the entier router states
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> |boolean | UrlTree{
-      return this.checkLoggedIn();
+      //state.url gives us the absolute path of the current navigation page
+      return this.checkLoggedIn(state.url);
 
   }
-
-  checkLoggedIn(){
+  //added url to redirect user to same url where it was before getting the login authentication
+  checkLoggedIn(url: string): boolean{
     if(this.authService.isLoggedIn){
       return true;
     }
+    this.authService.redirectUrl = url;
     this.route.navigate(['/login']);
     return false;
   }

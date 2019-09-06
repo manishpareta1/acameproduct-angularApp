@@ -18,6 +18,9 @@ import { AuthGuard } from '../user/auth.guard';
     RouterModule.forChild([
       { 
           path: 'products', 
+          //added guard to validate the if user is logged in before accessing the products page
+          //we have added it at parent level hence it is applicable for all of its children route
+          canActivate: [AuthGuard],
          // component: ProductListComponent, // commented to make Proudct list page as component less route
           resolve: {resolvedData: ProductListResolver},
           //Grouping the Component - making Proucts as component less route
@@ -27,10 +30,7 @@ import { AuthGuard } from '../user/auth.guard';
             //component mapped in ProductList link, it will try to load child route defination
             //hence it will redirect it to below empty path route and load the associated component.
             { 
-              path: '',
-              //added guard to validate the if user is logged in before accessing the products page
-              //we have added it at parent level hence it is applicable for all of its children
-              canActivate: [AuthGuard],
+              path: '',              
               component: ProductListComponent
             },
             { 

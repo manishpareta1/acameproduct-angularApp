@@ -19,8 +19,14 @@ export class LoginComponent {
       const userName = loginForm.form.value.userName;
       const password = loginForm.form.value.password;
       this.authService.login(userName, password);
-
-     this.router.navigate(['products']);
+    //added condition to check if the user is redirected from a specific page or login page
+    //if user has directly clicked on login page then redirect it to products page else
+    //redirect it to the page from where it was asked to login
+    if(this.authService.redirectUrl){
+        this.router.navigateByUrl(this.authService.redirectUrl);
+    }else{
+      this.router.navigate(['/products']);
+    }
     } else {
       this.errorMessage = 'Please enter a user name and password.';
     }

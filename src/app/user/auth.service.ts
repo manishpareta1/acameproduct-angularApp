@@ -8,6 +8,8 @@ import { MessageService } from '../messages/message.service';
 })
 export class AuthService {
   currentUser: User;
+  //added new variable to assign redire to url after user is prompted to login
+  redirectUrl: string;
 
   get isLoggedIn(): boolean {
     return !!this.currentUser;
