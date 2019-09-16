@@ -24,6 +24,10 @@ export class AppComponent {
     return this.authService.isLoggedIn;
   }
 
+  get isDisplay(): boolean{
+    return this.messageService.isDisplayed;
+  }
+
   get userName(): string {
     if (this.authService.currentUser) {
       return this.authService.currentUser.userName;

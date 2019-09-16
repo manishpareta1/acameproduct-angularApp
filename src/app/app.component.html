@@ -30,7 +30,7 @@
         *ngIf="isLoggedIn">
       <a class="nav-link">Welcome {{ userName }}</a>
     </li>
-    <li class="nav-item" *ngIf="!messageService.isDisplayed">
+    <li class="nav-item" *ngIf="!isDisplay">
           <!-- added router link for secondary outlet
           <a class="nav-link"
           [routerLink]="[{outlets: {popup: ['message']}}]">Show Messages</a>-->
@@ -38,7 +38,7 @@
           (click)="displayMessage()">Show Messages</a>
     </li>
     <!-- Hide Message Option-->
-    <li class="nav-item" *ngIf="messageService.isDisplayed">
+    <li class="nav-item" *ngIf="isDisplay">
         <a class="nav-link" (click)="hideMessage()">Hide Messages</a>
       </li>
     <li class="nav-item"
@@ -58,7 +58,7 @@
 <div class="container">
   <div class = "row">
     <!--#1Associating the animation with the correct html-->
-    <div class = "col-md-10" [@slideAnimation] = "o.isActivated  ? o.activateRoute : ''">
+    <div class = "col-md-10" [@slideAnimation] = "o.isActivated  ? o.activatedRoute : ''">
         <router-outlet #o="outlet"></router-outlet>
     </div>
     <div class = "col-md-2">
