@@ -10,22 +10,22 @@ import { ProductResolver } from './product-resolver.service';
 import { ProductListResolver } from './productlist-resolver.service';
 import { ProductEditInfoComponent } from './product-edit/product-edit-info.component';
 import { ProductEditTagsComponent } from './product-edit/product-edit-tags.component';
-import { AuthGuard } from '../user/auth.guard';
+//import { AuthGuard } from '../user/auth.guard';
 import { ProductEditGuard } from './product-edit/product-edit.guard';
 
 @NgModule({
   imports: [
     SharedModule,
     RouterModule.forChild([
-      { 
-          path: 'products', 
+      //{   //Commenting(#LL) root path/canActive/resole for products module here as part of Lazy Loading. it si already configured in app-routing.module.ts
+          //#LL path: 'products', 
           //added guard to validate the if user is logged in before accessing the products page
           //we have added it at parent level hence it is applicable for all of its children route
-          canActivate: [AuthGuard],
+          //#LL canActivate: [AuthGuard],
          // component: ProductListComponent, // commented to make Proudct list page as component less route
-          resolve: {resolvedData: ProductListResolver},
+          //#LL resolve: {resolvedData: ProductListResolver},
           //Grouping the Component - making Proucts as component less route
-          children: [
+          //#LL children: [
             //below route is needed to redirect products link to ProductListComponent
             //when we will click on ProudtList, it will try to look for a component to load, as there is no
             //component mapped in ProductList link, it will try to load child route defination
@@ -54,8 +54,8 @@ import { ProductEditGuard } from './product-edit/product-edit.guard';
                 { path: 'tags', component: ProductEditTagsComponent }
               ]
             }
-          ]
-      }      
+          //]
+     // }      
       
     ])
   ],

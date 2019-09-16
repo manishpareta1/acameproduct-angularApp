@@ -13,7 +13,7 @@ import { WelcomeComponent } from './home/welcome.component';
 import { PageNotFoundComponent } from './page-not-found.component';
 
 /* Feature Modules */
-import { ProductModule } from './products/product.module';
+//import { ProductModule } from './products/product.module';
 import { UserModule } from './user/user.module';
 import { MessageModule } from './messages/message.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -23,7 +23,9 @@ import { AppRoutingModule } from './app-routing.module';
     BrowserModule,
     HttpClientModule,
     InMemoryWebApiModule.forRoot(ProductData, { delay: 1000 }),
-    ProductModule,
+    //Commented as part of Lazy Loading Changes - as part of LL, the module which we want to LL should not,
+    //be dependent module of any other module.
+    //ProductModule,
     UserModule,
     MessageModule,
     AppRoutingModule,

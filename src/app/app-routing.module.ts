@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { WelcomeComponent } from './home/welcome.component';
 import { PageNotFoundComponent } from './page-not-found.component';
+import { AuthGuard } from './user/auth.guard';
+import { ProductListResolver } from './products/productlist-resolver.service'
 
 @NgModule({
     imports: [
@@ -9,6 +11,15 @@ import { PageNotFoundComponent } from './page-not-found.component';
         //and result in incorrect path
         RouterModule.forRoot([
             { path: 'welcome', component: WelcomeComponent},
+            //adding Product Module to Lazy load in root routing, along with AuthGaurd and route resolver
+            { 
+              path: 'products',
+              canActivate: [AuthGuard],
+              resolve: {resolvedData: ProductListResolver},
+              loadChildren: () => 
+              import('./products/product.module')
+              .then(m=>m.ProductModule)
+            }, 
             { path: '', redirectTo:'welcome', pathMatch: 'full'},
             { path: '**', component: PageNotFoundComponent}      
           ],//We can enable the route tracing with below code
