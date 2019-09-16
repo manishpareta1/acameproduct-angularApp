@@ -14,7 +14,8 @@ import { ProductListResolver } from './products/productlist-resolver.service'
             //adding Product Module to Lazy load in root routing, along with AuthGaurd and route resolver
             { 
               path: 'products',
-              canActivate: [AuthGuard],
+              //canActivate: [AuthGuard], //commented as part of canLoad guard change
+              canLoad: [AuthGuard],
               resolve: {resolvedData: ProductListResolver},
               loadChildren: () => 
               import('./products/product.module')

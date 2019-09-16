@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, CanActivate, Route, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, CanActivate, CanLoad, Router, Route } from '@angular/router';
 import { Observable } from 'rxjs';
-import { promise } from 'protractor';
 import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements  CanActivate{
+export class AuthGuard implements  CanActivate, CanLoad{
 
   constructor(private authService: AuthService,
     private route: Router){}
@@ -27,6 +26,12 @@ export class AuthGuard implements  CanActivate{
     this.authService.redirectUrl = url;
     this.route.navigate(['/login']);
     return false;
+  }
+
+  //canLoad doesnot have access to router.snapshot hence we need to use Route path to get the hold of
+  //requested path.
+  canLoad(route: Route): boolean{
+    return this.checkLoggedIn(route.path);
   }
   
 }
