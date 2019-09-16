@@ -6,7 +6,7 @@ import { Product, ProductResolved } from '../product';
 import { ProductService } from '../product.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OnInit } from '@angular/core';
-import { JsonPipe } from '@angular/common';
+
 
 @Component({
   templateUrl: './product-edit.component.html',
@@ -28,8 +28,8 @@ export class ProductEditComponent implements OnInit{
   //to user to notify about the unsaved work.
   //we have set current product to product in get method so in all the child component we are passing the
   //the reference of current procect.
-  get product(): Product{
-    return this.currentProduct
+  get product(): Product{ 
+      return this.currentProduct;
   }
 
   //in this setter method we are cloning product object and setting it to original prduct so that we can use
@@ -54,7 +54,7 @@ export class ProductEditComponent implements OnInit{
   ngOnInit(){
     //let id = +this.route.snapshot.paramMap.get('id');
     //this.getProduct(id);
-    //Another way of fething parameters from routes by using below method call.
+    //Another way of fetching parameters from routes by using below method call.
     //this returns an observable object, which is ment for tracking the change 
     //in param value and get the below code executed. We are using observable 
     //because navigation between edit and add product is getting tracked with 
@@ -140,9 +140,7 @@ export class ProductEditComponent implements OnInit{
     } else {
       this.errorMessage = 'Please correct the validation errors.';
     }
-
-    
-  }
+}
 
   onSaveComplete(message?: string): void {
     if (message) {
@@ -166,10 +164,8 @@ export class ProductEditComponent implements OnInit{
         this.dataIsValid['info'] = true;
       }else{
         this.dataIsValid['info'] = false;
-        }
-      
-
-      //'tags' tab
+      }
+    //'tags' tab
     if(this.product.category &&
       this.product.category.length >=3){
         this.dataIsValid['tags'] = true;
