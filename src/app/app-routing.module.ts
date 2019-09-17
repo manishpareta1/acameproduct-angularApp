@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterModule, PreloadAllModules } from '@angular/router';
 import { WelcomeComponent } from './home/welcome.component';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { AuthGuard } from './user/auth.guard';
@@ -14,8 +14,12 @@ import { ProductListResolver } from './products/productlist-resolver.service'
             //adding Product Module to Lazy load in root routing, along with AuthGaurd and route resolver
             { 
               path: 'products',
-              //canActivate: [AuthGuard], //commented as part of canLoad guard change
-              canLoad: [AuthGuard],
+              /**
+               * use canActivated guard if using preload all strategy
+               * use canLoad guard if using lazy loading
+               */
+              canActivate: [AuthGuard],
+              //canLoad: [AuthGuard],
               resolve: {resolvedData: ProductListResolver},
               loadChildren: () => 
               import('./products/product.module')
@@ -23,7 +27,8 @@ import { ProductListResolver } from './products/productlist-resolver.service'
             }, 
             { path: '', redirectTo:'welcome', pathMatch: 'full'},
             { path: '**', component: PageNotFoundComponent}      
-          ],//We can enable the route tracing with below code
+          ], //added preloading all strategy
+          { preloadingStrategy: PreloadAllModules}//We can enable the route tracing with below code
             //{ enableTracing: true }
           )
     ],
