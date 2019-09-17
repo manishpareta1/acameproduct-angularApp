@@ -4,6 +4,7 @@ import { WelcomeComponent } from './home/welcome.component';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { AuthGuard } from './user/auth.guard';
 import { ProductListResolver } from './products/productlist-resolver.service'
+import { SelectiveStrategy } from './selective-strategy.service';
 
 @NgModule({
     imports: [
@@ -20,6 +21,8 @@ import { ProductListResolver } from './products/productlist-resolver.service'
                */
               canActivate: [AuthGuard],
               //canLoad: [AuthGuard],
+              //added data property with preload = true for activating prelaoding selectiveStrategy.
+              data: { preload: true},
               resolve: {resolvedData: ProductListResolver},
               loadChildren: () => 
               import('./products/product.module')
@@ -27,8 +30,14 @@ import { ProductListResolver } from './products/productlist-resolver.service'
             }, 
             { path: '', redirectTo:'welcome', pathMatch: 'full'},
             { path: '**', component: PageNotFoundComponent}      
-          ], //added preloading all strategy
-          { preloadingStrategy: PreloadAllModules}//We can enable the route tracing with below code
+        ], 
+        /** Use { preloadingStrategy: PreloadAllModules} for preloading all modules
+         *  Use { preloadingStrategy: SelectiveStrategy} for custom preloading
+         *///added preloading all strategy
+          //{ preloadingStrategy: PreloadAllModules}
+          { preloadingStrategy: SelectiveStrategy}
+          
+          //We can enable the route tracing with below code
             //{ enableTracing: true }
           )
     ],
